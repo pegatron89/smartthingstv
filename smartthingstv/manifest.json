@@ -1,0 +1,13 @@
+
+{
+  "domain": "smartthingstv",
+  "name": "Smart Things TV",
+  "documentation": "https://www.google.com",
+  "requirements": [],
+  "homeassistant": "0.104.0",
+  "dependencies": [],
+  "codeowners": [
+    "@pegatron89"
+  ]
+}
+
