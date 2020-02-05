@@ -5,24 +5,30 @@ I am not a developer at all, I am learning python and wanted to try this. Let me
 
 # Features
 
+**Update 
+
+Removed the commands except turn off. 
+
 Can:
 -   Turn the TV off
 -   Show current state on / off
--   Step Volume up / down
 -   Show current source (Digital TV, HDMI 1, HDMI2, APP NAME)
--   Play Pause work
--   Current volume
--   Toggle mute
+-   Show current volume
+
 
 Todo:
+-  **Make 1 function to handle all commands
 -  Add WOL
+-  Play Pause work
 -  Set volume to X
+-  Step Volume up / down
+-  Toggle mute
 -  Set source to X
 -  Current digital channel should work but have no way of testing.
 -  Add source list
 -  Add ping method for state
 -  Automatically populate device IDs
--  Make 1 function to handle all commands
+
 
 Cant:
 - **Turn on via WIFI**
