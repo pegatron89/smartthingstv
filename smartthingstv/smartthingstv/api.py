@@ -68,8 +68,7 @@ class smartthingstv:
       API_DEVICE_STATUS = API_DEVICE + "/status"
       API_COMMAND = API_DEVICE + "/commands"
       cmdurl = requests.post(API_COMMAND,data=COMMAND_POWER_OFF ,headers=REQUEST_HEADERS)
-  def device_power_on(self):
-      #WOL
+
 
 
 
