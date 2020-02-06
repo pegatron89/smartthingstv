@@ -79,79 +79,78 @@ class smartthingstv(MediaPlayerDevice):
         self._api_key = api_key
         self._volume = 1
         self._muted = False
-        self._playing = False
+        self._playing = True #assume as playing so pause / play etc work within netflix plex etc
         self._state = "on"
         self._source = ""
         self._channel = 2
         self._channel_name = ""
-
+        self._media_title = ""
     def update(self):
         """Update state of device."""
         smarttv.device_update(self)
+
     def turn_off(self):
-        smarttv.device_power_off(self)
-    def mute_volume(self, mute):
-        """Send mute command."""
-        if self._muted == False:
-           smarttv.device_mute(self)
-        else:
-           smarttv.device_unmute(self)
+        arg = ""
+        cmdtype = "switch"
+        smarttv.send_command(self, arg, cmdtype)
 
-    def volume_up(self):
-        smarttv.device_volume_up(self)
+    def set_volume_level(self, arg, cmdtype="setvolume"):
+        VOLUME_LEVEL = int(arg*100)
+        smarttv.send_command(self, VOLUME_LEVEL, cmdtype)
 
-    def volume_down(self):
-        smarttv.device_volume_down(self)
-
-    def media_play_pause(self):
-        """Simulate play pause media player."""
-        if self._playing:
-            smarttv.device_pause(self)
-        else:
-            smarttv.device_play(self)
-
+    def mute_volume(self, mute, cmdtype="audiomute"):
+        smarttv.send_command(self, mute , cmdtype)
 
 
     @property
     def device_class(self):
         """Set the device class to TV."""
         return DEVICE_CLASS_TV
+
     @property
     def supported_features(self):
         """Flag media player features that are supported."""
         return SUPPORT_SAMSUNGTV
+
 
     @property
     def name(self):
         """Return the name of the device."""
 
         return self._name
+
     @property
     def media_title(self):
         """Title of current playing media."""
-        self._media_title = self._channel_name
+
         return self._media_title
+
     @property
     def state(self):
         """Return the state of the device."""
         return self._state
+
     @property
     def is_volume_muted(self):
         """Boolean if volume is currently muted."""
 
         return self._muted
+
     @property
     def volume_level(self):
         """Volume level of the media player (0..1)."""
         return self._volume
+
     @property
     def source(self):
 
         return self._source
+
     @property
     def channel(self):
 
         return self._channel
+
     @property
     def channel_name(self):
 
