@@ -8,9 +8,6 @@ API_DEVICES = API_BASEURL + "/devices/"
 COMMAND_POWER_ON =  "{'commands': [{'component': 'main','capability': 'switch','command': 'on'}]}"
 COMMAND_POWER_OFF = "{'commands': [{'component': 'main','capability': 'switch','command': 'off'}]}"
 COMMAND_CHANGE_SOURCE = "{'commands':[{'component': 'main','capability': 'mediaInputSource','command': 'setInputSource', 'arguments':['HDMI1']}]}" # HDMI1 , HDMI2 , 
-COMMAND_SET_VOLUME = "{'commands':[{'component': 'main','capability': 'audioVolume','command': 'setVolume','arguments': [15]}]}"
-COMMAND_VOL_UP = "{'commands':[{'component': 'main','capability': 'audioVolume','command': 'volumeUp'}]}"
-COMMAND_VOL_DOWN = "{'commands':[{'component': 'main','capability': 'audioVolume','command': 'volumeDown'}]}"
 COMMAND_REFRESH = "{'commands':[{'component': 'main','capability': 'refresh','command': 'refresh'}]}"
 COMMAND_MUTE = "{'commands':[{'component': 'main','capability': 'audioMute','command': 'mute'}]}"
 COMMAND_UNMUTE = "{'commands':[{'component': 'main','capability': 'audioMute','command': 'unmute'}]}"
@@ -48,8 +45,13 @@ class smartthingstv:
       device_source = data['components']['main']['mediaInputSource']['inputSource']['value']
       device_tv_chan = data['components']['main']['tvChannel']['tvChannel']['value']
       device_tv_chan_name = data['components']['main']['tvChannel']['tvChannelName']['value']
+      device_muted = data['components']['main']['audioMute']['mute']['value']
       self._state = device_state
       self._volume = device_volume
+      if device_muted == "mute":
+         self._muted = True
+      else:
+         self._muted = False
       if device_tv_chan_name == "":
          self._source = device_source
       else:
@@ -57,18 +59,23 @@ class smartthingstv:
       self._channel = device_tv_chan
       self._channel_name = device_tv_chan_name
 
-
-  def device_power_off(self): #send_command(self, command)
+  def send_command(self, command, cmdtype):
       API_KEY = self._api_key
       REQUEST_HEADERS = {"Authorization": "Bearer " + API_KEY}
       DEVICE_ID = self._device_id
-      API_BASEURL = "https://api.smartthings.com/v1"
       API_DEVICES = API_BASEURL + "/devices/"
       API_DEVICE = API_DEVICES + DEVICE_ID
-      API_DEVICE_STATUS = API_DEVICE + "/status"
       API_COMMAND = API_DEVICE + "/commands"
-      cmdurl = requests.post(API_COMMAND,data=COMMAND_POWER_OFF ,headers=REQUEST_HEADERS)
 
-
-
-
+      if cmdtype == "setvolume": # sets volume
+         API_COMMAND_DATA = "{'commands':[{'component': 'main','capability': 'audioVolume','command': 'setVolume','arguments': "
+         API_COMMAND_ARG  = "[{}]}}]}}".format(command)
+         API_FULL = API_COMMAND_DATA + API_COMMAND_ARG
+         cmdurl = requests.post(API_COMMAND,data=API_FULL ,headers=REQUEST_HEADERS)
+      elif cmdtype == "audiomute": # mutes audio
+         if self._muted == False:
+            cmdurl = requests.post(API_COMMAND,data=COMMAND_MUTE ,headers=REQUEST_HEADERS)
+         else:
+            cmdurl = requests.post(API_COMMAND,data=COMMAND_UNMUTE ,headers=REQUEST_HEADERS)
+      elif cmdtype == "switch": # turns off
+         cmdurl = requests.post(API_COMMAND,data=COMMAND_POWER_OFF ,headers=REQUEST_HEADERS)
