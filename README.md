@@ -7,24 +7,24 @@ I am not a developer at all, I am learning python and wanted to try this. Let me
 
 **Update 
 
-Added a function to handle commands. 
+Can now select sources i have manually set. Smart things api generates a supportedInputsources with all HDMI's on the tv but im having trouble with it in the sources in HA. It shows each character as a source rather than the sources itself. I will have another look. volume can also step up or down.
 
 Can:
 -   Turn the TV off
 -   Set volume
+-   Step volume up / down
 -   Set mute / unmute
 -   Show if muted / unmuted
 -   Show current state on / off
 -   Show current source (Digital TV, HDMI 1, HDMI2, APP NAME)
 -   Show current volume
+-   Add source list
+-   Set source to X
+-   Play Pause work
 
 
 Todo:
--  Add source list
--  Set source to X
 -  Add WOL
--  Play Pause work
--  Step Volume up / down
 -  Current digital channel should work but have no way of testing.
 -  Add ping method for state
 -  Automatically populate device IDs
@@ -33,7 +33,6 @@ Todo:
 Cant:
 - **Turn on via WIFI**
 - Launch an app via smartthings api (may have work around)
-- Switch to HDMI if an app is open (work around)
 
 # Set up
 Make sure your TV is logged into your smart things account.
