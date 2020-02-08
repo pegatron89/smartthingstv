@@ -43,7 +43,7 @@ SUPPORT_SAMSUNGTV = (
     | SUPPORT_VOLUME_MUTE
     | SUPPORT_VOLUME_SET
     | SUPPORT_PREVIOUS_TRACK
-#    | SUPPORT_SELECT_SOURCE     could pull source list from 
+    | SUPPORT_SELECT_SOURCE  #   could pull source list from 
     | SUPPORT_NEXT_TRACK
     | SUPPORT_TURN_OFF
     | SUPPORT_PLAY
@@ -79,9 +79,10 @@ class smartthingstv(MediaPlayerDevice):
         self._api_key = api_key
         self._volume = 1
         self._muted = False
-        self._playing = True #assume as playing so pause / play etc work within netflix plex etc
+        self._playing = True
         self._state = "on"
         self._source = ""
+        self._source_list = []
         self._channel = 2
         self._channel_name = ""
         self._media_title = ""
@@ -101,7 +102,15 @@ class smartthingstv(MediaPlayerDevice):
     def mute_volume(self, mute, cmdtype="audiomute"):
         smarttv.send_command(self, mute , cmdtype)
 
-
+    def volume_up(self, cmdtype="stepvolume"):
+        """Volume up the media player."""
+        arg = "up"
+        smarttv.send_command(self, arg, cmdtype)
+    def volume_down(self, cmdtype="stepvolume"):
+        arg = ""
+        smarttv.send_command(self, arg, cmdtype)
+    def select_source(self, source, cmdtype="selectsource"):
+        smarttv.send_command(self, source, cmdtype)
     @property
     def device_class(self):
         """Set the device class to TV."""
@@ -111,7 +120,6 @@ class smartthingstv(MediaPlayerDevice):
     def supported_features(self):
         """Flag media player features that are supported."""
         return SUPPORT_SAMSUNGTV
-
 
     @property
     def name(self):
@@ -145,7 +153,10 @@ class smartthingstv(MediaPlayerDevice):
     def source(self):
 
         return self._source
-
+    @property
+    def source_list(self):
+        source_list = ['HDMI1','HDMI2','digitalTv']
+        return source_list
     @property
     def channel(self):
 
