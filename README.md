@@ -20,7 +20,7 @@ Can:
 -   Show current volume
 -   Add source list
 -   Set source to X
--   Play Pause work
+
 
 
 Todo:
@@ -28,6 +28,7 @@ Todo:
 -  Current digital channel should work but have no way of testing.
 -  Add ping method for state
 -  Automatically populate device IDs
+-  Play Pause work
 
 
 Cant:
