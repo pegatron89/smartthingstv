@@ -52,10 +52,7 @@ class smartthingstv:
          self._muted = True
       else:
          self._muted = False
-      if device_tv_chan_name == "":
-         self._source = device_source
-      else:
-         self._source = device_tv_chan_name
+      self._source = device_source
       self._channel = device_tv_chan
       self._channel_name = device_tv_chan_name
 
