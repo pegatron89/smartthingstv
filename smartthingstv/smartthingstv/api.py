@@ -38,7 +38,7 @@ class smartthingstv:
       cmdurl = requests.post(API_COMMAND,data=COMMAND_REFRESH ,headers=REQUEST_HEADERS)
       resp = requests.get(API_DEVICE_STATUS,headers=REQUEST_HEADERS)
       data = resp.json()
-      device_volume = data['main']['volume']['value']
+      device_volume = int(data['main']['volume']['value']) / 100
       device_state = data['main']['switch']['value']
       device_source = data['main']['inputSource']['value']
       device_all_sources = data['main']['supportedInputSources']['value']
