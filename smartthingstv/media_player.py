@@ -147,7 +147,17 @@ class smartthingstv(MediaPlayerDevice):
     @property
     def state(self):
         """Return the state of the device."""
-       return self._state
+        if self._state == "off":
+            return self._state
+        elif self._source in ["digitalTv", "TV"]:
+            if self._channel_name == "":
+                return self._channel
+            else:
+                return self._channel_name + " (" + self._channel + ")"
+        elif self._source.startswith("HDMI"):
+            return self._source_list[ self._source_list.index(self._source) + 1 ]
+        else:
+            return self._state
 
     @property
     def is_volume_muted(self):
