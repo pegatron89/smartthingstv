@@ -54,7 +54,10 @@ media_player:
     device_id: "YOUR DEVICE ID"
 ```
 
+Tested on:
 
+UE55NU7100 - Tizen 4.0 - Lan
+UE49MU6400 - Tizen 3.0 - Wifi
 
 
 
