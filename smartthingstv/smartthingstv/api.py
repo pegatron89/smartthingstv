@@ -38,10 +38,10 @@ class smartthingstv:
       cmdurl = requests.post(API_COMMAND,data=COMMAND_REFRESH ,headers=REQUEST_HEADERS)
       resp = requests.get(API_DEVICE_STATUS,headers=REQUEST_HEADERS)
       data = resp.json()
-      device_volume = data['main']['volume']['value']
+      device_volume = int(data['main']['volume']['value']) / 100
       device_state = data['main']['switch']['value']
       device_source = data['main']['inputSource']['value']
-      device_all_sources = data['main']['supportedInputSources']['value']
+      device_all_sources = json.loads(data['main']['supportedInputSources']['value'])
       device_tv_chan = data['main']['tvChannel']['value']
       device_tv_chan_name = data['main']['tvChannelName']['value']
       device_muted = data['main']['mute']['value'] 
@@ -52,10 +52,7 @@ class smartthingstv:
          self._muted = True
       else:
          self._muted = False
-      if device_tv_chan_name == "":
-         self._source = device_source
-      else:
-         self._source = device_tv_chan_name
+      self._source = device_source
       self._channel = device_tv_chan
       self._channel_name = device_tv_chan_name
 
