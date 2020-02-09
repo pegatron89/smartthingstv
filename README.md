@@ -7,7 +7,7 @@ I am not a developer at all, I am learning python and wanted to try this. Let me
 
 **Update 
 
-Can now select sources i have manually set. Smart things api generates a supportedInputsources with all HDMI's on the tv but im having trouble with it in the sources in HA. It shows each character as a source rather than the sources itself. I will have another look. volume can also step up or down.
+I have added WOL, You will need to add your MAC address to your configuration. Volume and source list issue fixed and current state thanks to @jaruba . 
 
 Can:
 -   Turn the TV off
@@ -20,11 +20,11 @@ Can:
 -   Show current volume
 -   Add source list
 -   Set source to X
+-   Add WOL
 
 
 
 Todo:
--  Add WOL
 -  Current digital channel should work but have no way of testing.
 -  Add ping method for state
 -  Automatically populate device IDs
@@ -52,6 +52,8 @@ media_player:
     name: My TV name
     api_key: "YOUR API KEY"
     device_id: "YOUR DEVICE ID"
+    mac: "YOUR MAC ADDRESS"
+    expand_sources: True
 ```
 
 Tested on:
