@@ -4,7 +4,7 @@
   "name": "Smart Things TV",
   "documentation": "https://www.google.com",
   "requirements": ["wakeonlan==1.1.6"],
-  "homeassistant": "0.104.0",
+  "homeassistant": "0.105.0",
   "dependencies": [],
   "codeowners": [
     "@pegatron89"
