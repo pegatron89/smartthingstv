@@ -155,7 +155,10 @@ class smartthingstv(MediaPlayerDevice):
             else:
                 return self._channel_name + " (" + self._channel + ")"
         elif self._source.startswith("HDMI"):
-            return self._source_list[ self._source_list.index(self._source) + 1 ]
+            if self._expand_sources:
+                return self._source_list[ self._source_list.index(self._source) + 1 ]
+            else:
+                return self._source
         else:
             return self._state
 
