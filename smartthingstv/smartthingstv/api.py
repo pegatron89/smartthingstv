@@ -7,7 +7,6 @@ API_BASEURL = "https://api.smartthings.com/v1"
 API_DEVICES = API_BASEURL + "/devices/"
 COMMAND_POWER_OFF = "{'commands': [{'component': 'main','capability': 'switch','command': 'off'}]}"
 COMMAND_REFRESH = "{'commands':[{'component': 'main','capability': 'refresh','command': 'refresh'}]}"
-COMMAND_CHANGE_SOURCE = "{'commands':[{'component': 'main','capability': 'mediaInputSource','command': 'setInputSource', 'arguments':['HDMI1']}]}" # HDMI1 , HDMI2 , 
 COMMAND_PAUSE = "{'commands':[{'component': 'main','capability': 'mediaPlayback','command': 'pause'}]}"
 COMMAND_MUTE = "{'commands':[{'component': 'main','capability': 'audioMute','command': 'mute'}]}"
 COMMAND_UNMUTE = "{'commands':[{'component': 'main','capability': 'audioMute','command': 'unmute'}]}"
