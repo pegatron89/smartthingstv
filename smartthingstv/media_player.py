@@ -29,7 +29,7 @@ from homeassistant.components.media_player.const import (
     MEDIA_TYPE_APP,
 )
 from homeassistant.const import (
-    CONF_NAME, CONF_API_KEY, CONF_DEVICE_ID, 
+    CONF_NAME, CONF_API_KEY, CONF_DEVICE_ID, CONF_MAC,
 )
 import homeassistant.helpers.config_validation as cv
 from homeassistant.util import dt as dt_util
