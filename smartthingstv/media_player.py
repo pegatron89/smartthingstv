@@ -157,6 +157,8 @@ class smartthingstv(MediaPlayerDevice):
         """Return the state of the device."""
         if self._state == "off":
             return self._state
+        elif self._channel_name != ""  and self._channel == '':
+            return self._channel_name
         elif self._source in ["digitalTv", "TV"]:
             if self._channel_name == "":
                 return self._channel
