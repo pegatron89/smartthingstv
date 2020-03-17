@@ -50,7 +50,7 @@ class smartthingstv:
       device_tv_chan = data['main']['tvChannel']['value']
       device_tv_chan_name = data['main']['tvChannelName']['value']
       device_muted = data['main']['mute']['value'] 
-	    if device_state == "off":
+      if device_state == "off":
          self._state = STATE_OFF
       else:
          self._state = STATE_ON
