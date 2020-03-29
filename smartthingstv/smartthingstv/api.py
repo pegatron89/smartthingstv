@@ -9,13 +9,7 @@ from homeassistant.const import (
 )
 API_BASEURL = "https://api.smartthings.com/v1"
 API_DEVICES = API_BASEURL + "/devices/"
-COMMAND_POWER_OFF = "{'commands': [{'component': 'main','capability': 'switch','command': 'off'}]}"
 COMMAND_REFRESH = "{'commands':[{'component': 'main','capability': 'refresh','command': 'refresh'}]}"
-COMMAND_PAUSE = "{'commands':[{'component': 'main','capability': 'mediaPlayback','command': 'pause'}]}"
-COMMAND_MUTE = "{'commands':[{'component': 'main','capability': 'audioMute','command': 'mute'}]}"
-COMMAND_UNMUTE = "{'commands':[{'component': 'main','capability': 'audioMute','command': 'unmute'}]}"
-COMMAND_PLAY = "{'commands':[{'component': 'main','capability': 'mediaPlayback','command': 'play'}]}"
-COMMAND_STOP = "{'commands':[{'component': 'main','capability': 'mediaPlayback','command': 'stop'}]}"
 COMMAND_REWIND = "{'commands':[{'component': 'main','capability': 'mediaPlayback','command': 'rewind'}]}"
 COMMAND_FAST_FORWARD = "{'commands':[{'component': 'main','capability': 'mediaPlayback','command': 'fastForward'}]}"
 
@@ -108,3 +102,13 @@ class smartthingstv:
          else:
             API_COMMAND_DATA = "{'commands':[{'component': 'main','capability': 'tvChannel','command': 'channelDown'}]}"
             cmdurl = requests.post(API_COMMAND,data=API_COMMAND_DATA ,headers=REQUEST_HEADERS)
+      elif cmdtype == "pausemedia":
+            API_COMMAND_DATA = "{'commands':[{'component': 'main','capability': 'mediaPlayback','command': 'pause'}]}"
+            cmdurl = requests.post(API_COMMAND,data=API_COMMAND_DATA ,headers=REQUEST_HEADERS)
+      elif cmdtype == "playmedia":
+            API_COMMAND_DATA = "{'commands':[{'component': 'main','capability': 'mediaPlayback','command': 'play'}]}"
+            cmdurl = requests.post(API_COMMAND,data=API_COMMAND_DATA ,headers=REQUEST_HEADERS)
+      elif cmdtype == "stopmedia":
+            API_COMMAND_DATA = "{'commands':[{'component': 'main','capability': 'mediaPlayback','command': 'stop'}]}"
+            cmdurl = requests.post(API_COMMAND,data=API_COMMAND_DATA ,headers=REQUEST_HEADERS)
+
