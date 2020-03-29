@@ -19,6 +19,7 @@ from homeassistant.components.media_player.const import (
     SUPPORT_PAUSE,
     SUPPORT_PLAY,
     SUPPORT_PLAY_MEDIA,
+    SUPPORT_STOP,
     SUPPORT_PREVIOUS_TRACK,
     SUPPORT_SELECT_SOURCE,
     SUPPORT_TURN_OFF,
@@ -52,6 +53,7 @@ SUPPORT_SAMSUNGTV = (
     | SUPPORT_TURN_ON
     | SUPPORT_PLAY
     | SUPPORT_PAUSE
+    | SUPPORT_STOP
 )
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
@@ -131,7 +133,34 @@ class smartthingstv(MediaPlayerDevice):
             smarttv.send_command(self, new_source, cmdtype)
         else:
             smarttv.send_command(self, source, cmdtype)
-
+    def media_play(self):
+        arg = ""
+        cmdtype = "playmedia"
+        smarttv.send_command(self, arg , cmdtype)
+        self._playing = True
+    def media_pause(self):
+        arg = ""
+        cmdtype = "pausemedia"
+        smarttv.send_command(self, arg , cmdtype)
+        self._playing = False
+    def media_play_pause(self):
+        """Simulate play pause media player."""
+        if self._playing:
+            arg = ""
+            cmdtype = "pausemedia"
+            smarttv.send_command(self, arg , cmdtype)
+            self._playing = False
+        else:
+            arg = ""
+            cmdtype = "playmedia"
+            smarttv.send_command(self, arg , cmdtype)
+            self._playing = True
+    def media_stop(self):
+        """Send stop command."""
+        cmdtype = "stopmedia"
+        arg= ""
+        smarttv.send_command(self, arg , cmdtype)
+        self._playing = False
     @property
     def device_class(self):
         """Set the device class to TV."""
