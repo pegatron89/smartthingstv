@@ -3,6 +3,10 @@ import requests
 from requests import ReadTimeout, ConnectTimeout, HTTPError, Timeout, ConnectionError
 import json
 import os
+from homeassistant.const import (
+    STATE_OFF,
+    STATE_ON,
+)
 API_BASEURL = "https://api.smartthings.com/v1"
 API_DEVICES = API_BASEURL + "/devices/"
 COMMAND_POWER_OFF = "{'commands': [{'component': 'main','capability': 'switch','command': 'off'}]}"
@@ -18,7 +22,7 @@ COMMAND_FAST_FORWARD = "{'commands':[{'component': 'main','capability': 'mediaPl
 class smartthingstv:
 
   def __init__(self):
-      self._state = "off"
+      self._state = STATE_OFF
       self._name = name
       self._muted = False
       self._volume = 10
@@ -46,7 +50,10 @@ class smartthingstv:
       device_tv_chan = data['main']['tvChannel']['value']
       device_tv_chan_name = data['main']['tvChannelName']['value']
       device_muted = data['main']['mute']['value'] 
-      self._state = device_state
+      if device_state == "off":
+         self._state = STATE_OFF
+      else:
+         self._state = STATE_ON
       self._volume = device_volume
       self._source_list = device_all_sources
       if device_muted == "mute":
@@ -84,9 +91,20 @@ class smartthingstv:
             cmdurl = requests.post(API_COMMAND,data=COMMAND_UNMUTE ,headers=REQUEST_HEADERS)
       elif cmdtype == "switch": # turns off
          cmdurl = requests.post(API_COMMAND,data=COMMAND_POWER_OFF ,headers=REQUEST_HEADERS)
-      elif cmdtype == "selectsource": #changes source
+      elif cmdtype == "selectsource": # changes source
          API_COMMAND_DATA =  "{'commands':[{'component': 'main','capability': 'mediaInputSource','command': 'setInputSource', 'arguments': "
          API_COMMAND_ARG  = "['{}']}}]}}".format(command)
          API_FULL = API_COMMAND_DATA + API_COMMAND_ARG
          cmdurl = requests.post(API_COMMAND,data=API_FULL ,headers=REQUEST_HEADERS)
-
+      elif cmdtype == "selectchannel": # changes channel
+         API_COMMAND_DATA =  "{'commands':[{'component': 'main','capability': 'tvChannel','command': 'setTvChannel', 'arguments': "
+         API_COMMAND_ARG  = "['{}']}}]}}".format(command)
+         API_FULL = API_COMMAND_DATA + API_COMMAND_ARG
+         cmdurl = requests.post(API_COMMAND,data=API_FULL ,headers=REQUEST_HEADERS)
+      elif cmdtype == "stepchannel": # steps channel up or down
+         if command == "up":
+            API_COMMAND_DATA = "{'commands':[{'component': 'main','capability': 'tvChannel','command': 'channelUp'}]}"
+            cmdurl = requests.post(API_COMMAND,data=API_COMMAND_DATA ,headers=REQUEST_HEADERS)
+         else:
+            API_COMMAND_DATA = "{'commands':[{'component': 'main','capability': 'tvChannel','command': 'channelDown'}]}"
+            cmdurl = requests.post(API_COMMAND,data=API_COMMAND_DATA ,headers=REQUEST_HEADERS)

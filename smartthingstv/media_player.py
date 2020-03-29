@@ -29,7 +29,7 @@ from homeassistant.components.media_player.const import (
     MEDIA_TYPE_APP,
 )
 from homeassistant.const import (
-    CONF_NAME, CONF_API_KEY, CONF_DEVICE_ID, CONF_MAC,
+    STATE_OFF, STATE_ON, CONF_NAME, CONF_API_KEY, CONF_DEVICE_ID, CONF_MAC,
 )
 import homeassistant.helpers.config_validation as cv
 from homeassistant.util import dt as dt_util
@@ -91,7 +91,7 @@ class smartthingstv(MediaPlayerDevice):
         self._volume = 1
         self._muted = False
         self._playing = True
-        self._state = "on"
+        self._state = STATE_OFF
         self._source = ""
         self._source_list = []
         self._channel = 2
@@ -150,14 +150,9 @@ class smartthingstv(MediaPlayerDevice):
     @property
     def media_title(self):
         """Title of current playing media."""
-        return self._media_title
-
-    @property
-    def state(self):
-        """Return the state of the device."""
-        if self._state == "off":
-            return self._state
-        elif self._channel_name != ""  and self._channel == '':
+        if self._state == STATE_OFF:
+            return None
+        elif self._channel_name != ""  and self._channel == "":
             return self._channel_name
         elif self._source in ["digitalTv", "TV"]:
             if self._channel_name == "":
@@ -170,7 +165,12 @@ class smartthingstv(MediaPlayerDevice):
             else:
                 return self._source
         else:
-            return self._state
+            return None
+
+    @property
+    def state(self):
+        """Return the state of the device."""
+        return self._state
 
     @property
     def is_volume_muted(self):
